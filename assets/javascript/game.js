@@ -5,7 +5,7 @@ var alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n
 
 var pcGuess = alpha[Math.floor(Math.random() * alpha.length)];
 
-console.log("THE PC GUESSED " + pcGuess);
+
 
 // declaring variables for wins, losses, guesses, and empty array to store player guesses
 
@@ -31,28 +31,33 @@ document.onkeyup = function(event){
         var userGuess = event.key;
         guesses.push(event.key);
     }
+
     // logic to check whether player wins, loses, or loses a guess
 
     if (userGuess == pcGuess) {
         wins += 1
-        guessLeft = 8;
+        guessLeft = 9;
         alert("You have won! Your guesses have been reset and the computer has picked a new letter.");
         guesses = [];
         pcGuess = alpha[Math.floor(Math.random() * alpha.length)];
-        document.querySelector("#gameBody").innerHTML = newBody;
+        console.log("THE PC PICKED " + pcGuess);
+        
     }
-    
-    if (userGuess != pcGuess) {
-        guessLeft -= 1;
-        document.querySelector("#gameBody").innerHTML = newBody;
-    }
-    
+
     if (guessLeft == 0) {
         losses += 1;
         alert("You ran out of guesses and lost! The computer has picked a new letter.");
         pcGuess = alpha[Math.floor(Math.random() * alpha.length)];
-        document.querySelector("#gameBody").innerHTML = newBody;
+        console.log("THE PC PICKED " + pcGuess);
+        guesses = [];
+        guessLeft = 9;
     }
+    
+    if (userGuess != pcGuess) {
+        guessLeft -= 1;
+    }
+    
+
     
     //altering html body to show game stats AFTER everything calculates so values displayed are always up to date
 
