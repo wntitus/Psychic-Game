@@ -18,8 +18,11 @@ document.onkeyup = function(event){
 
     console.log(event.key);
     console.log(typeof event.key);
+    console.log(alpha.includes(event.key));
 
-    if (event.key == alpha) {
+    // checking to make sure user presses a letter before triggering game
+
+    if (alpha.includes(event.key)) {
 
         // storing user keypress in variable and adding pressed key into the guesses array
 
