@@ -5,6 +5,8 @@ var alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n
 
 var pcGuess = alpha[Math.floor(Math.random() * alpha.length)];
 
+console.log("THE PC GUESSED " + pcGuess);
+
 // declaring variables for wins, losses, guesses, and empty array to store player guesses
 
 var wins = 0;
@@ -16,9 +18,9 @@ var guesses = [];
 
 document.onkeyup = function(event){
 
+
     console.log(event.key);
-    console.log(typeof event.key);
-    console.log(alpha.includes(event.key));
+    console.log(guesses);
 
     // checking to make sure user presses a letter before triggering game
 
@@ -28,35 +30,44 @@ document.onkeyup = function(event){
 
         var userGuess = event.key;
         guesses.push(event.key);
+    }
+    // logic to check whether player wins, loses, or loses a guess
 
-        // altering html body to contain game info
-
-        var newBody = 
-            "<p>You chose: " + userGuess + "</p>" +
-            "<p>You have " + guessLeft + " guesses left.</p>" +
-            "<p>You've guessed " + guesses + " so far.</p>";
-
+    if (userGuess == pcGuess) {
+        wins += 1
+        guessLeft = 8;
+        alert("You have won! Your guesses have been reset and the computer has picked a new letter.");
+        guesses = [];
+        pcGuess = alpha[Math.floor(Math.random() * alpha.length)];
         document.querySelector("#gameBody").innerHTML = newBody;
+    }
+    
+    if (userGuess != pcGuess) {
+        guessLeft -= 1;
+        document.querySelector("#gameBody").innerHTML = newBody;
+    }
+    
+    if (guessLeft == 0) {
+        losses += 1;
+        alert("You ran out of guesses and lost! The computer has picked a new letter.");
+        pcGuess = alpha[Math.floor(Math.random() * alpha.length)];
+        document.querySelector("#gameBody").innerHTML = newBody;
+    }
+    
+    //altering html body to show game stats AFTER everything calculates so values displayed are always up to date
 
-        console.log(pcGuess);
+    var newBody = 
+        "<p>You chose: " + userGuess + "</p>" +
+        "<p>You have " + guessLeft + " guesses left.</p>" +
+        "<p>You've guessed " + guesses + " so far.</p>" +
+        "<p>You've won " + wins + " so far.</p>" +
+        "<p>You've lost " + losses + " so far.</p>";
 
-        //logic conditions to alter wins or losses, also ends game and resets if player wins or loses
+    document.querySelector("#gameBody").innerHTML = newBody;
 
-        if (userGuess == pcGuess) {
-            wins++;
-            guessLeft == 8;
-            alert("You have won! Your guesses have been reset.");
-        }
 
-        if (userGuess != pcGuess) {
-            guessLeft--;
-        }
+    
 
-        if (guessLeft == 0) {
-            losses++;
-            alert("You ran out of guesses and lost! The computer has picked a new letter.");
-            var pcGuess = alpha[Math.floor(Math.random() * alpha.length)];
-        }
 
-    }  
+
 }
