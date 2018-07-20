@@ -44,6 +44,12 @@ document.onkeyup = function(event){
         
     }
 
+
+    
+    if (userGuess != pcGuess) {
+        guessLeft -= 1;
+    }
+    
     if (guessLeft == 0) {
         losses += 1;
         alert("You ran out of guesses and lost! The computer has picked a new letter.");
@@ -52,11 +58,6 @@ document.onkeyup = function(event){
         guesses = [];
         guessLeft = 9;
     }
-    
-    if (userGuess != pcGuess) {
-        guessLeft -= 1;
-    }
-    
 
     
     //altering html body to show game stats AFTER everything calculates so values displayed are always up to date
